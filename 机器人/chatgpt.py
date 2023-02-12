@@ -1,7 +1,7 @@
 import openai
 import script
 # Set your API key
-openai.api_key = "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"
+openai.api_key = "your key"
 # Use the GPT-3 model
 def chat(uid, content):
     completion = openai.Completion.create(
