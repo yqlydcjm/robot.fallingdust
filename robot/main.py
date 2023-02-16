@@ -33,7 +33,7 @@ class AcceptMes(Resource):
             uid = _["sender"]["user_id"]  # 获取发信息的好友qq号
             message = _["raw_message"]  # 获取发送过来的消息
 
-            if uid ==1317497275:
+            if uid ==:#机器人主的qq号
                 if message[0:2] == '群发':
                     tool.qf(message)
                 else:
