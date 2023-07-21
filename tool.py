@@ -8,6 +8,7 @@ import requests
 import script
 import time
 import random
+
 # 群发助手
 def qf(uid,message):
     friend_list = requests.get(url='http://127.0.0.1:5700/get_friend_list')
@@ -53,11 +54,54 @@ def bmi(uid, weight, height):
     if 23.9<=bmi:
         content = f'你的bmi值是{bmi},你太重了，少吃点吧没事多注意锻炼哦'
     script.handle_privates(uid,  content)
-
-
-
+# 给管理
+def admin_gave(uid,useren):
+    params = {
+        "group_id": uid,
+        "user_id": useren,
+        "enable": True
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_admin', params=params)
+# admin(869396064, 1317497275)
+# 取消管理
+def admin_get(uid,useren):
+    params = {
+        "group_id": uid,
+        "user_id": useren,
+        "enable": False
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_admin', params=params)
+# 开群
+def group_open(uid):
+    params = {
+        "group_id": uid,
+        "enable": False
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_whole_ban', params=params)
+# 关群
+def group_close(uid):
+    params = {
+        "group_id": uid,
+        "enable": True
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_whole_ban', params=params)
+# 单人禁言
+def user_ban(uid, user, duration):
+    params = {
+        "group_id": uid,
+        "user_id": user,
+        "duration": duration, # 禁言时间单位为秒,0为接触禁言
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_ban', params=params)
+# 给头衔
+def title(uid, user, title):
+    params = {
+        "group_id": uid,
+        "user_id": user,
+        'special_title': title,
+    }
+    friend_list = requests.get(url='http://127.0.0.1:5700/set_group_special_title', params=params)
+    print(friend_list)
 
 if __name__ == '__main__':
-    # smash(1317497275)
-    bmi(1,80,1.73)
-    pass
+    smash(738458661, 1317497275)

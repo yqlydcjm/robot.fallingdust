@@ -7,7 +7,7 @@ __time__ = "2023/7/1 20:05"
 import openai
 import script
 # Set your API key
-openai.api_key = "aaa"
+openai.api_key = "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"
 def chat(uid, content):  #定义一个函数，以便后面反复调用
     try:
         response = openai.Completion.create(
