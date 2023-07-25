@@ -12,8 +12,6 @@ import websocket
 from flask import Flask
 # 配置数据库
 from flask_sqlalchemy import SQLAlchemy
-
-import chatgpt
 import script
 import tool
 
@@ -84,7 +82,7 @@ def on_message(ws, message):
             uid = _.get("user_id")  # 发送者qq号
             message = _.get("message")  # 获取发来的消息
             if uid == 1317497275:  # 你的QQ号
-                if message[0:2] == "群发":
+                if message == "群发":
                     t = threading.Thread(
                         target=tool.qf,
                         args=(
@@ -93,27 +91,6 @@ def on_message(ws, message):
                         ),
                     )
                     t.start()
-                if "1" in message:
-                    t = threading.Thread(
-                        target=script.handle_private,
-                        args=(
-                            uid,
-                            message,
-                        ),
-                    )
-                    t.start()
-                else:
-                    chatgpt.chat(uid, message)
-            else:
-                t = threading.Thread(
-                    target=chatgpt.chat,
-                    args=(
-                        uid,
-                        message,
-                    ),
-                )
-                t.start()
-            # chatgpt.chat(uid,message)
         elif message_type == "group":
             uid = _.get("group_id")  # qq群号
             user = _.get("user_id")  # 发送者qq号
@@ -124,21 +101,7 @@ def on_message(ws, message):
             if Content is not None:
                 if message == Content.knowledge:
                     script.handle_privates(uid, Content.content)
-            if "提问" in message:
-                t = threading.Thread(
-                    target=chatgpt.chats,
-                    args=(
-                        uid,
-                        message,
-                    ),
-                )
-                t.start()
             else:
-                if message == "历史":
-                    script.handle_privates(uid, tool.today())
-                if message[0] == "捣":
-                    message = int(message[2:])
-                    tool.smash(uid, message)
                 if message[0:3] == "bmi":
                     a, b, c = message.split(" ")
                     b = float(b)
@@ -254,5 +217,6 @@ if __name__ == "__main__":
     # with app.app_context():
     #     db.session.add(new_user)
     #     db.session.commit()
+    print('运行开始')
     ws = websocket.WebSocketApp("ws://localhost:8080/event", on_message=on_message)
     ws.run_forever()

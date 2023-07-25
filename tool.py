@@ -17,32 +17,6 @@ def qf(uid,message):
         uid = i['user_id']
         script.handle_private(uid, message)
         time.sleep(random.randint(7,12))
-# # 群发助手
-# def qf(uid,message):
-#     friend_list = requests.get(url='http://127.0.0.1:5700/get_friend_list')
-#     friends = friend_list.json()
-#     for i in friends['data']:       #获取用户用户名以及qq号
-#         uid = i['user_id']
-#         script.handle_private(uid, message)
-# 历史上的今天
-def today():
-    today = 'https://api.iculture.cc/api/lishi'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.47'}
-    html = requests.get(today, headers=headers)
-    return html.text
-def smash(uid, qq):
-    qq = qq
-    smash = f'https://api.iculture.cc/api/face_pound/?QQ={qq}'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.47'}
-    html = requests.get(smash, headers=headers)
-    r = html.content
-    url = f'./img/{qq}_dog.gif'
-    with open(url,"wb") as f:
-        f.write(r)
-    # script.handle_privates(464325726,  f'[CQ:at,qq=2556689087]')
-
-    script.handle_privates(uid,  f'[CQ:image,file=file:///{url}]')
-    return url
 def bmi(uid, weight, height):
     bmi = weight / pow(height, 2)
     print(bmi)
