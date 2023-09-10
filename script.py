@@ -7,14 +7,16 @@ __time__ = "2023/7/1 20:05"
 import asyncio
 import httpx
 from datetime import datetime
-
+import time
 # 处理私聊信息
 def handle_private(uid, message): # uid为要发送给谁的qq号，message为信息
     print(message)
+    time.sleep(100)
     asyncio.run(send(uid, f"{message}\n回复时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"))
 # 处理群聊信息
 def handle_privates(uid, message): # uid为群号，message为消息
     print(message)
+    time.sleep(100)
     asyncio.run(sends(uid, f"{ message }\n回复时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"))
 # 如果发送的为私聊消息
 async def send(uid, message):
