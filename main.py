@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-__author__ = "一千零一点"
+__author__ = "一千零一点(崔嘉铭)"
 __file__ = "main.py"
 __time__ = "2023/7/1 20:05"
 import json
@@ -168,11 +168,14 @@ def on_message(ws, message):
                         test = Impressions.query.filter(
                             Impressions.user == user
                         ).first()
-                        # print(type(test))
-                        # print(test.impression)
-                        test.impression = test.impression + read()
-                        db.session.commit()
-                        script.handle_privates(uid, f"签到成功，你目前的好感值是{test.impression}")
+                        if test is not None:
+                            # print(type(test))
+                            # print(test.impression)
+                            test.impression = test.impression + read()
+                            db.session.commit()
+                            script.handle_privates(uid, f"签到成功，你目前的好感值是{test.impression}")
+                        else:
+                            script.handle_privates(uid, f"你需要注册账号才可以使用此功能哦。命令：‘注册 name’")
 
                 # if message == '周周周':
                 #     script.handle_privates(uid, "周周周别玩了啊")
@@ -209,7 +212,7 @@ if __name__ == "__main__":
     # with app.app_context():
     #     db.drop_all()# 删除数据表
     #     db.create_all()# 创建数据表
-    # new_user = User(email=550341836, content='老八')
+    # new_user = User(email=3234623244, content='你好杰瑞')
     # with app.app_context():
     #     db.session.add(new_user)
     #     db.session.commit()
